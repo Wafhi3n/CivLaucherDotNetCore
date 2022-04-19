@@ -35,7 +35,8 @@ namespace CivLaucherDotNetCore.Vue
 
         private void update_Click(object sender, RoutedEventArgs e)
         {
-            modController.updateToLastTag();
+            modController.updateOrInstallToLastTag((Object)Tags.SelectedItem);
+            
         }
     }
 }

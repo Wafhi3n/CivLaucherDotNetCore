@@ -27,7 +27,8 @@ namespace CivLaucherDotNetCore.Controleur
                 try
                 {
                     repository = new Repository(m.path);
-                    
+                    //Commands.Fetch(repository,"origin",,new FetchOptions { TagFetchMode= TagFetchMode.All});
+                    //Commands.Checkout(repository, LastTag.Target.Sha);
                     m.Tags = repository.Tags;
 
 
@@ -62,14 +63,46 @@ namespace CivLaucherDotNetCore.Controleur
             //verification de la version du mod 
         }
 
-        internal void updateToLastTag()
+        internal void updateOrInstallToLastTag(Object selectedItem)
         {
+            Tag selectedTag = (Tag)selectedItem;
+            //Console.WriteLine(selectedTag);
+            if (Directory.Exists(m.path))
+            {
+                if (selectedItem != null)
+                {
+                   
+                    Commands.Checkout(repository, selectedTag.Target.Sha);
+                    m.version = selectedTag.FriendlyName;
+                }
+                else
+                {
+                    Tag LastTag = repository.Tags.Last();
+                    Commands.Checkout(repository, LastTag.Target.Sha);
+                    m.version = LastTag.FriendlyName;
+                }
+
+            }
+            else
+            {
+                cloneMod();
+            }
+        }
+
+        internal void cloneMod()
+        {
+            Directory.CreateDirectory(m.path);
+            Repository.Clone( m.repoUrl+"/"+m.repositoriInfo.owner+"/"+m.repositoriInfo.depot, m.path);
+            repository = new Repository(m.path);
+            //Commands.Fetch()
             Tag LastTag = repository.Tags.Last();
             Commands.Checkout(repository, LastTag.Target.Sha);
             m.version = LastTag.FriendlyName;
+            m.status = "OK";
+            //m.Tags = m.Tags;
         }
 
-        public ModController(CivLauncher.Mod m)
+            public ModController(CivLauncher.Mod m)
         {
             this.m = m;
 

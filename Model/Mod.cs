@@ -22,7 +22,7 @@ namespace CivLauncher
         private string versionValue = String.Empty;
         private string versionDisponibleValue = String.Empty;
         private TagCollection TagsValue ;
-
+        internal string? repoUrl;
 
         public string path { get; set; }
 

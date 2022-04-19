@@ -27,6 +27,7 @@ namespace CivLaucherDotNetCore.Controleur
             foreach (Repo mod in bm.repositoriesInfo)
             { 
                 Mod m = new Mod(bm.FullcivModFolder, bm.apiurl, mod);
+                m.repoUrl = bm.config.repoUrl;
                 bm.mods.Add(m);
                 ModController mc = new ModController(m);
                 modsController.Add(mc);

@@ -13,11 +13,13 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
         </Grid.RowDefinitions>
         <Label x:Name="Nom" Content="{Binding repoName}"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Grid.Column="0"/>
-        <!--<Label x:Name="status" Content="{Binding status}" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Grid.Column="1"/>-->
+        <Label x:Name="status" Content="{Binding status}" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Grid.Column="5"/>
         <Label x:Name="version" Content="{Binding version}" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Column="1"/>
         <Label x:Name="versionDisponible" Content="{Binding versionDisponible}" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Column="2"/>
         <ComboBox Name="Tags" Grid.Column="3">
