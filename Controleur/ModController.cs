@@ -19,17 +19,19 @@ namespace CivLaucherDotNetCore.Controleur
 
         Repository repository;
         public Mod m;
+        public Tag tagSelect { get; set; }
 
         public void initLocalRepositoryFromExistingFolder()
         {
+
             if (Directory.Exists(m.path))
             {
                 try
                 {
                     repository = new Repository(m.path);
-                    //Commands.Fetch(repository,"origin",,new FetchOptions { TagFetchMode= TagFetchMode.All});
+                    Commands.Fetch(repository, "origin", new[] { "+refs/heads/*:refs/remotes/origin/*" },new FetchOptions { TagFetchMode= TagFetchMode.All},"fetchtag");;
                     //Commands.Checkout(repository, LastTag.Target.Sha);
-                    m.Tags = repository.Tags;
+                    //m.Tags = repository.Tags.ToList<Tag>();
 
 
                     foreach (Tag tag in repository.Tags)
@@ -89,6 +91,36 @@ namespace CivLaucherDotNetCore.Controleur
             }
         }
 
+        internal void updateBranchToTagClick()
+        {
+            updateBranchToTag(tagSelect);
+        }
+
+        internal void updateBranchToTag(Tag t)
+        {
+            
+            if (Directory.Exists(m.path))
+            {
+                if ( t != null)
+                {
+
+                    Commands.Checkout(repository, t.Target.Sha);
+                    m.version = t.FriendlyName;
+                }
+                else
+                {
+                    Tag LastTag = m.tags.Last();
+                    Commands.Checkout(repository, LastTag.Target.Sha);
+                    m.version = LastTag.FriendlyName;
+                }
+
+            }
+            else
+            {
+                cloneMod();
+            }
+        }
+
         internal void cloneMod()
         {
             Directory.CreateDirectory(m.path);
@@ -105,25 +137,19 @@ namespace CivLaucherDotNetCore.Controleur
             public ModController(CivLauncher.Mod m)
         {
             this.m = m;
-
-            Console.WriteLine(m.path);
-
             if (Directory.Exists(m.path))
             {
-                
+                repository = new Repository(m.path);
+                getReleaseTagsFromApi("/releases");
                 try
                 {
                     m.status = "repertoire trouvé...";
-                    Console.WriteLine(m.path);
                 }
                 catch (Exception)
                 {
                     Console.WriteLine("Error reading app settings");
                 }
-
-
-
-               
+           
                 Console.WriteLine("dossier: " + m.path + " trouvé");
             }
             else
@@ -131,25 +157,21 @@ namespace CivLaucherDotNetCore.Controleur
                 m.status = "KO";
 
                 Console.WriteLine("dossier: " + m.path + " non trouvé");
-                //creation du depot 
             }
 
         }
-        public void setstatus(string s)
-        {
-            m.status = s;
-        }
-        public async Task<string> getDataFromApi()
+        public async Task<string> getDataFromApi(string call)
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(m.apiUrl);
+                Console.WriteLine(m.apiUrl+call);
+                client.BaseAddress = new Uri(m.apiUrl + call);
                 client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.UserAgent.TryParseAdd("request2");
 
 
-                HttpResponseMessage response = await client.GetAsync(m.apiUrl).ConfigureAwait(false);
+                HttpResponseMessage response = await client.GetAsync(m.apiUrl + call).ConfigureAwait(false);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -163,20 +185,50 @@ namespace CivLaucherDotNetCore.Controleur
             }
 
         }
+        public async void getReleaseTagsFromApi(string call)
+        {
+            try
+            {
+               string data = await getDataFromApi("/releases").ConfigureAwait(false);
+                if (data == null)
+                {
+                    Console.WriteLine(data);
 
+                }
+                else
+                {
+                   var returnApis = JsonConvert.DeserializeObject<List<JsonApiGitReturnLastRelease>>(data);
+                    Lookup<string,Tag> tg = (Lookup<string, Tag>)repository.Tags.ToLookup(t => t.FriendlyName);
+                    Lookup<string, JsonApiGitReturnLastRelease> tg2 = (Lookup<string, JsonApiGitReturnLastRelease>)returnApis.ToLookup(t=>t.tag_name);
+                    foreach (IGrouping<string, JsonApiGitReturnLastRelease> tag2 in tg2)
+                    {
+                        foreach (IGrouping<string, Tag> tag in tg)
+                        {
+                            if(tag2.Key == tag.Key)
+                            {
+                                m.tags.Add(tag.First());
+                                continue;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw ex;
+            }
+        }
         public async void getLastTagNameReleaseFromRepo()
         {
             try
             {
-                string data = await getDataFromApi().ConfigureAwait(false);
+                string data = await getDataFromApi("/releases/latest").ConfigureAwait(false);
                 if (data == null )
                 {
-                    m.versionDisponible = "Impossible de recupéré la derniére version dispo";
                 }
                 else
                 {
-                    JsonApiGitReturn returnApi = JsonConvert.DeserializeObject<JsonApiGitReturn>(data);
-                    m.versionDisponible = returnApi.name;
+                    JsonApiGitReturnLastRelease returnApi = JsonConvert.DeserializeObject<JsonApiGitReturnLastRelease>(data);
                     Console.WriteLine(m.version);
                 }
             }
@@ -187,5 +239,6 @@ namespace CivLaucherDotNetCore.Controleur
             
 
         }
+
     }
 }

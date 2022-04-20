@@ -34,6 +34,21 @@ namespace CivLauncher
                 Console.WriteLine("Error reading app settings");
             }
         }
+      /*  public List<Mod> Mods
+        {
+
+            get { return this.modsValue; }
+
+            set
+            {
+                if (this.modsValue != value)
+                {
+                    this.modsValue = value;
+                    //NotifyPropertyChanged();
+                }
+            }
+
+        }*/
 
     }
 }

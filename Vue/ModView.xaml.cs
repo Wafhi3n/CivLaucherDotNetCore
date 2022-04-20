@@ -22,21 +22,13 @@ namespace CivLaucherDotNetCore.Vue
     /// </summary>
     public partial class ModView : UserControl
     {
-        ModController modController;
-        public ModView(ModController m)
-        {
-            InitializeComponent();
-            this.modController = m;
-            this.DataContext = modController.m;
-            Tags.ItemsSource = modController.m.Tags;
-            Console.Write(m);
-
-        }
+        public ModController modController { get; set; }
+        public Mod modData { get; set; }
 
         private void update_Click(object sender, RoutedEventArgs e)
         {
             modController.updateOrInstallToLastTag((Object)Tags.SelectedItem);
-            
+
         }
     }
 }

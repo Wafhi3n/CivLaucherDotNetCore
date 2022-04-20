@@ -29,7 +29,7 @@ namespace CivLaucherDotNetCore.Model
         public bool site_admin { get; set; }
     }
 
-    public class JsonApiGitReturn
+    public class JsonApiGitReturnLastRelease
     {
         public string url { get; set; }
         public string assets_url { get; set; }

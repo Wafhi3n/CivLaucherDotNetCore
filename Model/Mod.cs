@@ -1,10 +1,12 @@
 ﻿
 using CivLaucherDotNetCore;
+using CivLaucherDotNetCore.Controleur;
 using LibGit2Sharp;
 //using LibGit2Sharp;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Dynamic;
 using System.IO;
@@ -19,9 +21,18 @@ namespace CivLauncher
         //Repository repository;
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public ModController mc { get; set; }
+
         private string versionValue = String.Empty;
-        private string versionDisponibleValue = String.Empty;
-        private TagCollection TagsValue ;
+
+        private ObservableCollection<Tag> tagsVal;
+        public ObservableCollection<Tag> tags
+        {
+
+            set { tagsVal = value; }
+            get { return tagsVal; }
+        }
+
         internal string? repoUrl;
 
         public string path { get; set; }
@@ -32,11 +43,13 @@ namespace CivLauncher
         public string repoName { get; set; }
         public Mod(string civModFolder, string url, Repo repositoriInfo)
         {
+            this.tags = new ObservableCollection<Tag>();
+
             this.repositoriInfo = repositoriInfo;
             this.repoName = repositoriInfo.depot;
             this.path = civModFolder + "\\" + repositoriInfo.depot;
             Console.WriteLine(path);
-            this.apiUrl =  url + "/" + repositoriInfo.owner + "/" + repositoriInfo.depot + "/releases/latest";
+            this.apiUrl =  url + "/" + repositoriInfo.owner + "/" + repositoriInfo.depot;
         }
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
@@ -55,33 +68,28 @@ namespace CivLauncher
             } 
         
         }
-        public string versionDisponible
+        public string derniereVersionDisponible
         {
 
-            get { return this.versionDisponibleValue; }
+            get { return this.tags[0].FriendlyName; }
 
             set
             {
-                if (this.versionDisponibleValue != value)
-                {
-                    this.versionDisponibleValue = value;
-                    NotifyPropertyChanged();
-                }
+               
             }
 
         }
-        public TagCollection Tags
+
+
+
+        
+
+        public void updateBranchToTag(Tag t)
         {
-
-            get { return TagsValue; }
-
-            set
-            {
-                this.TagsValue = value;
-                NotifyPropertyChanged();
-            }
-
+            this.mc.updateBranchToTag(t);
         }
+
+
     }
 
 }

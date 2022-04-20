@@ -30,6 +30,7 @@ namespace CivLaucherDotNetCore.Controleur
                 m.repoUrl = bm.config.repoUrl;
                 bm.mods.Add(m);
                 ModController mc = new ModController(m);
+                m.mc = mc;
                 modsController.Add(mc);
             }
         }

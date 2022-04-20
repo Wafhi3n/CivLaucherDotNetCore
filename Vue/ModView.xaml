@@ -8,28 +8,29 @@
              d:DesignHeight="20" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="133*" />
+            <ColumnDefinition Width="133*" />
+            <ColumnDefinition Width="133*" />
+            <ColumnDefinition Width="101*" />
+            <ColumnDefinition Width="32*"/>
+            <ColumnDefinition Width="133*" />
+            <ColumnDefinition Width="133*" />
 
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
         </Grid.RowDefinitions>
-        <Label x:Name="Nom" Content="{Binding repoName}"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Grid.Column="0"/>
-        <Label x:Name="status" Content="{Binding status}" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Grid.Column="5"/>
-        <Label x:Name="version" Content="{Binding version}" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Column="1"/>
-        <Label x:Name="versionDisponible" Content="{Binding versionDisponible}" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Column="2"/>
-        <ComboBox Name="Tags" Grid.Column="3">
+        <Label x:Name="Nom" Content="{Binding repoName}"  Grid.Column="0"/>
+        <Label x:Name="status" Content="{Binding status}"  Grid.Column="6"/>
+        <Label x:Name="version" Content="{Binding version}" Grid.ColumnSpan="3" Margin="133,0,133,0"/>
+        <Label x:Name="versionDisponible" Content="{Binding versionDisponible}" Grid.Column="2"/>
+        <ComboBox Name="Tags" Grid.Column="3" Grid.ColumnSpan="2">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
-                        <TextBlock Text="{Binding FriendlyName}" />
+                    <TextBlock Text="{Binding FriendlyName}"  />
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <Button x:Name="update" Style="{StaticResource BoutonMaj}" Grid.Column="4" Click="update_Click"></Button>
+        <Button x:Name="update" Style="{StaticResource BoutonMaj}" Grid.Column="4" Click="update_Click" Grid.ColumnSpan="3" Margin="32,0,133,0"></Button>
     </Grid>
 </UserControl>
 

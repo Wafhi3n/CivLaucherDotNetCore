@@ -1,5 +1,7 @@
 /obj/*
-.vs/*
+.vs
 bin/*
 bin
 obj
+.vs/CivLaucherDotNetCore/*
+.vs/CivLaucherDotNetCore/DesignTimeBuild/.dtbcache.v2

@@ -1,5 +1,6 @@
 ﻿using CivLaucherDotNetCore.Controleur;
 using CivLauncher;
+using LibGit2Sharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +26,7 @@ namespace CivLaucherDotNetCore.Vue
         BankModController bmc;
         MainFrame mainFrame;
         ContentControl mainContentControl;
-
-
+        //ComboBox Tagscb;
         public ModsViewer(Controleur.BankModController bmc, MainFrame mainFrame, ContentControl mainContentControl)
         {
             InitializeComponent();
@@ -36,22 +36,42 @@ namespace CivLaucherDotNetCore.Vue
             //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListMod.ItemsSource);
             this.mainContentControl=mainContentControl;
             bmc.UpdateAllModLastAviableRelease();
-
-
-            List<ModView> listModsView = new List<ModView>();
+            //this.Tagscb = tagsCB;
+            //mainContentControl.ta
+            /*List<ModView> listModsView = new List<ModView>();
             foreach(ModController m in bmc.modsController)
             {
                 listModsView.Add(new ModView(m));
 
-            }
+            }*/
 
-            Mod1.Content = listModsView[0];
-            Mod2.Content = listModsView[1];
-            Mod3.Content = listModsView[2];
-            Mod4.Content = listModsView[3];
+            
+            DataGridMod.ItemsSource = bmc.bm.mods;
+            Console.WriteLine(bmc);
+
 
         }
+        private void update_Click(object sender, RoutedEventArgs e)
+        {
 
+            var button = sender as Button;
+
+            ((Mod)(button.DataContext)).mc.updateBranchToTagClick();
+
+            
+            //tagsCB.
+
+                 //((Mod)((Button)sender).Tag).mc.updateBranchToTag(tagsCB);
+
+
+                /*.updateBranchToTag()*/;
+
+            //sender.Tag.
+
+            // sender.
+            //modController.updateOrInstallToLastTag((Object)Tags.SelectedItem);
+
+        }
         private void RetourMainFrame(object sender, RoutedEventArgs e)
         {
             if (this.mainFrame != null)
@@ -59,6 +79,12 @@ namespace CivLaucherDotNetCore.Vue
                 this.mainContentControl.Content = this.mainFrame;
             }
 
+        }
+
+        private void ComboBox_SelectionChanged(object sender, EventArgs e)
+        {
+            ((Mod)(((ComboBox)sender).DataContext)).mc.tagSelect = (Tag)(((ComboBox)sender).SelectedItem);
+            // Do actions
         }
     }
 }
