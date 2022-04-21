@@ -12,12 +12,16 @@
             <ColumnDefinition Width="80*" />
             <ColumnDefinition Width="20*" />
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="1" Grid.Row="0" Height="50" Width="50" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,50,50,0" Click="RetourMainFrame" Content="retour" />
-        <Grid Grid.Row="1" Margin="50,50,0,0">
-            <DataGrid x:Name="DataGridMod" AutoGenerateColumns="False"  Grid.Row="1"  >
-                <DataGrid.Columns>
+        <Button Grid.Column="1" Grid.Row="0" Height="50" Width="50" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,50,50,0" Click="RetourMainFrame" Content="retour" />
 
-                    <DataGridTemplateColumn>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Margin="50,50,0,0">
+
+
+
+
+            <DataGrid x:Name="DataGridMod" AutoGenerateColumns="False"  Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center" >
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="*">
                         <DataGridTemplateColumn.Header>
                             <TextBlock>Nom</TextBlock>
                         </DataGridTemplateColumn.Header>
@@ -27,21 +31,10 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    
-                    <DataGridTemplateColumn>
-                        <DataGridTemplateColumn.Header>
-                            <TextBlock>Version Actuel</TextBlock>
-                        </DataGridTemplateColumn.Header>
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Label x:Name="version" Content="{Binding version}" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="*">
                         <DataGridTemplateColumn.Header>
-                            <TextBlock>Derniére Version Disponible</TextBlock>
+                            <TextBlock>Last Release</TextBlock>
                         </DataGridTemplateColumn.Header>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -50,13 +43,13 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="*">
                         <DataGridTemplateColumn.Header>
-                            <TextBlock>Tags disponibles </TextBlock>
+                            <TextBlock>Version Installée</TextBlock>
                         </DataGridTemplateColumn.Header>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox  SelectionChanged="ComboBox_SelectionChanged" x:Name="tagsCB" ItemsSource="{Binding tags}" >
+                                <ComboBox  SelectedItem="{Binding tagSelect}" SelectionChanged="ComboBox_SelectionChanged" x:Name="tagsCB" ItemsSource="{Binding tags}" >
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding FriendlyName}"  />
@@ -67,7 +60,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Tag="{Binding}" x:Name="updateBtutton" Style="{StaticResource BoutonMaj}" Click="update_Click" >
@@ -76,10 +69,31 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
+                    <DataGridTemplateColumn Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label x:Name="version" Content="{Binding labelInfo}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
                 </DataGrid.Columns>
             </DataGrid>
+
+
+
+
         </Grid>
        
+        
+        
+        
+        
+        
+        
     </Grid>
 
+    
+    
+    
 </UserControl>

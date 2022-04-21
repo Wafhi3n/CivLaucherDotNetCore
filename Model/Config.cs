@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CivLaucherDotNetCore
+namespace CivLaucherDotNetCore.Model
 {
     public class Config
     {

@@ -1,117 +1,137 @@
 ﻿using CivLaucherDotNetCore.Model;
-using CivLauncher;
+using CivLaucherDotNetCore.Vue.Model;
 using LibGit2Sharp;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 namespace CivLaucherDotNetCore.Controleur
 {
     public class ModController
     {
 
-        Repository repository;
-        public Mod m;
-        public Tag tagSelect { get; set; }
+        public ObservableCollection<Tag> tags;
 
-        public void initLocalRepositoryFromExistingFolder()
+        internal ModView View { get; set; }
+
+        public string derniereVersionDisponible
         {
 
-            if (Directory.Exists(m.path))
+            get
             {
-                try
+                if (this.tags !=null && this.tags.Count > 0 && this.tags[0] != null)
                 {
-                    repository = new Repository(m.path);
-                    Commands.Fetch(repository, "origin", new[] { "+refs/heads/*:refs/remotes/origin/*" },new FetchOptions { TagFetchMode= TagFetchMode.All},"fetchtag");;
-                    //Commands.Checkout(repository, LastTag.Target.Sha);
-                    //m.Tags = repository.Tags.ToList<Tag>();
-
-
-                    foreach (Tag tag in repository.Tags)
-                    {
-                        if (tag.Reference.TargetIdentifier == repository.Head.Tip.Id.Sha)
-                        {
-                            m.version = tag.FriendlyName;
-                                
-
-                        }
-
-                    }
-
-
-                }catch(Exception ex)
-                {
-                    m.status = "erreur repo";
-                 }
+                    return this.tags.First().FriendlyName;
+                }
+                else { return ""; }
             }
 
-                
-
-            //getLastTagNameFromRepo();
-
-            //repo.Tags.First();
-            //Console.WriteLine("Tag ? :"+repo.Head.Tip.Id);
-
-
-
-
-            //verification de la version du mod 
-        }
-
-        internal void updateOrInstallToLastTag(Object selectedItem)
-        {
-            Tag selectedTag = (Tag)selectedItem;
-            //Console.WriteLine(selectedTag);
-            if (Directory.Exists(m.path))
+            set
             {
-                if (selectedItem != null)
+
+            }
+
+        }
+        public Tag TagActuel()
+        {
+            foreach (Tag tag in repository.Tags)
+            {
+                if (tag.Reference.TargetIdentifier == repository.Head.Tip.Id.Sha)
+                {
+                    this.View.tagSelect = tag;
+                    return tag;
+
+                }
+
+            }
+            return null;
+        }
+        public int IndexVersionActuel
+        {
+            get
+            {
+                foreach (var obj in repository.Tags.Select((value, index) => new { index, value }))
                 {
                    
-                    Commands.Checkout(repository, selectedTag.Target.Sha);
-                    m.version = selectedTag.FriendlyName;
-                }
-                else
-                {
-                    Tag LastTag = repository.Tags.Last();
-                    Commands.Checkout(repository, LastTag.Target.Sha);
-                    m.version = LastTag.FriendlyName;
-                }
+                    if (obj.value.Reference.TargetIdentifier == repository.Head.Tip.Id.Sha)
+                    {
 
+                        return  obj.index;
+                    }
+                }
+                return 0;
+            }
+        }
+
+        private Repository repository { get; set; }
+
+
+        private Mod m { get; set; }
+        public Tag tagSelect { get; set; }
+        public ModController(Mod m)
+        {
+            this.m = m;
+            this.tags = new ObservableCollection<Tag>();
+            if (isInstalled())
+            {
+                initLocalRepositoryFromExistingFolder();
+                getReleaseTagsFromApi();
             }
             else
             {
-                cloneMod();
+            }
+
+        }
+
+        public Boolean isInstalled()
+        {
+            if (m.IsInstalled())
+            {
+                try
+                {
+                    Repository rp = new Repository(m.path);
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+        public void initLocalRepositoryFromExistingFolder()
+        {
+            try
+            {
+                repository = new Repository(m.path);
+                Commands.Fetch(repository, "origin", new[] { "+refs/heads/*:refs/remotes/origin/*" }, new FetchOptions { TagFetchMode = TagFetchMode.All }, "fetchtag"); ;
+            }
+            catch (Exception ex)
+            {
+                m.status = "erreur repo";
             }
         }
-
-        internal void updateBranchToTagClick()
-        {
-            updateBranchToTag(tagSelect);
-        }
-
         internal void updateBranchToTag(Tag t)
         {
-            
-            if (Directory.Exists(m.path))
+
+            if (isInstalled())
             {
-                if ( t != null)
+                if (t != null)
                 {
 
                     Commands.Checkout(repository, t.Target.Sha);
-                    m.version = t.FriendlyName;
+                    //m.version = t.FriendlyName;
                 }
                 else
                 {
-                    Tag LastTag = m.tags.Last();
+                    Tag LastTag = tags.Last();
                     Commands.Checkout(repository, LastTag.Target.Sha);
-                    m.version = LastTag.FriendlyName;
+                    //m.version = LastTag.FriendlyName;
                 }
 
             }
@@ -124,59 +144,28 @@ namespace CivLaucherDotNetCore.Controleur
         internal void cloneMod()
         {
             Directory.CreateDirectory(m.path);
-            Repository.Clone( m.repoUrl+"/"+m.repositoriInfo.owner+"/"+m.repositoriInfo.depot, m.path);
+            Repository.Clone(m.repoUrl + "/" + m.repoOwner + "/" + m.repoName, m.path);
             repository = new Repository(m.path);
-            //Commands.Fetch()
             Tag LastTag = repository.Tags.Last();
             Commands.Checkout(repository, LastTag.Target.Sha);
-            m.version = LastTag.FriendlyName;
-            m.status = "OK";
-            //m.Tags = m.Tags;
-        }
+            getReleaseTagsFromApi();
+         }
 
-            public ModController(CivLauncher.Mod m)
-        {
-            this.m = m;
-            if (Directory.Exists(m.path))
-            {
-                repository = new Repository(m.path);
-                getReleaseTagsFromApi("/releases");
-                try
-                {
-                    m.status = "repertoire trouvé...";
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Error reading app settings");
-                }
-           
-                Console.WriteLine("dossier: " + m.path + " trouvé");
-            }
-            else
-            {
-                m.status = "KO";
 
-                Console.WriteLine("dossier: " + m.path + " non trouvé");
-            }
-
-        }
         public async Task<string> getDataFromApi(string call)
         {
             using (var client = new HttpClient())
             {
-                Console.WriteLine(m.apiUrl+call);
                 client.BaseAddress = new Uri(m.apiUrl + call);
                 client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.UserAgent.TryParseAdd("request2");
-
-
+                client.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
                 HttpResponseMessage response = await client.GetAsync(m.apiUrl + call).ConfigureAwait(false);
-
                 if (response.IsSuccessStatusCode)
                 {
-
-                    return await response.Content.ReadAsStringAsync();
+                    string retour = await response.Content.ReadAsStringAsync();
+                    storeDataJson(call, retour);
+                    return retour;
                 }
                 else
                 {
@@ -185,33 +174,86 @@ namespace CivLaucherDotNetCore.Controleur
             }
 
         }
-        public async void getReleaseTagsFromApi(string call)
+
+        public void storeDataJson(string call, string data)
         {
+            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoder/cacheJson/"))
+            {
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoder/cacheJson/");
+            }
+            string retourJson = JsonConvert.SerializeObject(data);
+            File.WriteAllText(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoder/cacheJson/" + callJsonName(call), retourJson);
+        }
+        public string callJsonName(string call)
+        {
+            return call + m.repoOwner + m.repoName + ".json";
+        }
+
+        public async Task<string> loadStoredDataJsonAsync(string call)
+        {
+            string retour = "";
+            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoder/cacheJson/"))
+            {
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoder/cacheJson/");
+
+            }
+            else
+            {
+                string uriFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoder/cacheJson/" + callJsonName(call);
+                if (File.Exists(uriFile))
+                {
+                    DateTime modification = File.GetLastWriteTime(uriFile).AddMinutes(30);
+                    if (DateTime.Compare(modification, DateTime.Now) > 0)
+                    {
+                        string fichier = File.ReadAllText(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoder/cacheJson/" + callJsonName(call));
+                        retour = JsonConvert.DeserializeObject<string>(fichier);
+                    }
+                    else
+                    {
+                        retour = await getDataFromApi(call).ConfigureAwait(false);
+                    }
+                }
+            }
+            return retour;
+        }
+        public async void getReleaseTagsFromApi()
+        {
+
+            this.isInstalled();
             try
             {
-               string data = await getDataFromApi("/releases").ConfigureAwait(false);
-                if (data == null)
-                {
-                    Console.WriteLine(data);
+                string data;
+                string storedData = await loadStoredDataJsonAsync("/releases");
 
+                if (storedData != null && storedData != "")
+                {
+                    data = storedData;
                 }
                 else
                 {
-                   var returnApis = JsonConvert.DeserializeObject<List<JsonApiGitReturnLastRelease>>(data);
-                    Lookup<string,Tag> tg = (Lookup<string, Tag>)repository.Tags.ToLookup(t => t.FriendlyName);
-                    Lookup<string, JsonApiGitReturnLastRelease> tg2 = (Lookup<string, JsonApiGitReturnLastRelease>)returnApis.ToLookup(t=>t.tag_name);
-                    foreach (IGrouping<string, JsonApiGitReturnLastRelease> tag2 in tg2)
+                    data = await getDataFromApi("/releases").ConfigureAwait(false);
+
+                }
+
+                var returnApis = JsonConvert.DeserializeObject<List<JsonApiGitReturnLastRelease>>(data);
+                Lookup<string, Tag> tg = (Lookup<string, Tag>)repository.Tags.ToLookup(t => t.FriendlyName);
+                Lookup<string, JsonApiGitReturnLastRelease> tg2 = (Lookup<string, JsonApiGitReturnLastRelease>)returnApis.ToLookup(t => t.tag_name);
+                foreach (IGrouping<string, JsonApiGitReturnLastRelease> tag2 in tg2)
+                {
+                    foreach (IGrouping<string, Tag> tag in tg)
                     {
-                        foreach (IGrouping<string, Tag> tag in tg)
+                        if (tag2.Key == tag.Key)
                         {
-                            if(tag2.Key == tag.Key)
+                            App.Current.Dispatcher.Invoke((Action)delegate //<--- HERE
                             {
-                                m.tags.Add(tag.First());
-                                continue;
-                            }
+                                tags.Add(tag.First());
+                            });
+
+                            continue;
                         }
                     }
                 }
+
             }
             catch (TaskCanceledException ex)
             {
@@ -223,20 +265,19 @@ namespace CivLaucherDotNetCore.Controleur
             try
             {
                 string data = await getDataFromApi("/releases/latest").ConfigureAwait(false);
-                if (data == null )
+                if (data == null)
                 {
                 }
                 else
                 {
                     JsonApiGitReturnLastRelease returnApi = JsonConvert.DeserializeObject<JsonApiGitReturnLastRelease>(data);
-                    Console.WriteLine(m.version);
                 }
             }
             catch (TaskCanceledException ex)
             {
                 throw ex;
             }
-            
+
 
         }
 

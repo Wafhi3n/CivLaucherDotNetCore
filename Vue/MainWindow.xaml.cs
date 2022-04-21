@@ -1,11 +1,14 @@
 ﻿
 using CivLaucherDotNetCore;
 using CivLaucherDotNetCore.Controleur;
+using CivLaucherDotNetCore.Model;
 using CivLaucherDotNetCore.Vue;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,10 +22,18 @@ namespace CivLauncher
     {
         public MainWindow()
         {
-            InitializeComponent();
+
+        InitializeComponent();
+
+
+
+
+
+
+
 
             var configurationBuilder = new ConfigurationBuilder();
-            configurationBuilder.AddJsonFile("appsettings.json");
+            configurationBuilder.AddJsonFile(AppDomain.CurrentDomain.BaseDirectory+"\\appsettings.json");
             var configuration = configurationBuilder.Build();
             var bindConfig = new Config();
             configuration.Bind(bindConfig);
@@ -36,6 +47,17 @@ namespace CivLauncher
 
         }
 
+        public async void iniWebView()
+        {
+            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoder/Webview2"))
+            {
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoder/Webview2/");
+            }
+
+
+            await CoreWebView2Environment.CreateAsync("", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoder/Webview2",
+                                        new CoreWebView2EnvironmentOptions(null, "FR", null));
+        }
 
     }
 

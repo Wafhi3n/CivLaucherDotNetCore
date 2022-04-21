@@ -1,6 +1,4 @@
-﻿
-using CivLaucherDotNetCore;
-using CivLaucherDotNetCore.Controleur;
+﻿using CivLaucherDotNetCore.Controleur;
 using LibGit2Sharp;
 //using LibGit2Sharp;
 using Microsoft.Extensions.Configuration;
@@ -14,79 +12,59 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 
-namespace CivLauncher
+namespace CivLaucherDotNetCore.Model
 {
-    public class Mod : DynamicObject, INotifyPropertyChanged
+    public class Mod
     {
-        //Repository repository;
-        public event PropertyChangedEventHandler PropertyChanged;
+        public ModController mController { get; set; }
 
-        public ModController mc { get; set; }
 
-        private string versionValue = String.Empty;
-
-        private ObservableCollection<Tag> tagsVal;
-        public ObservableCollection<Tag> tags
-        {
-
-            set { tagsVal = value; }
-            get { return tagsVal; }
-        }
-
-        internal string? repoUrl;
+        internal string repoUrl { get; set; }
 
         public string path { get; set; }
 
         public string apiUrl { get; set; }
-        public  string status { get; set; }
-        public Repo repositoriInfo { get; set; }
-        public string repoName { get; set; }
-        public Mod(string civModFolder, string url, Repo repositoriInfo)
-        {
-            this.tags = new ObservableCollection<Tag>();
+        public string status { get; set; }
+        private Repo repositoriInfo { get; set; }
 
-            this.repositoriInfo = repositoriInfo;
-            this.repoName = repositoriInfo.depot;
-            this.path = civModFolder + "\\" + repositoriInfo.depot;
-            Console.WriteLine(path);
-            this.apiUrl =  url + "/" + repositoriInfo.owner + "/" + repositoriInfo.depot;
-        }
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        public string version {
-
-            get { return this.versionValue; } 
-            
-            set {
-                if (this.versionValue != value)
-                {
-                    this.versionValue = value;
-                    NotifyPropertyChanged();
-                }
-            } 
-        
-        }
-        public string derniereVersionDisponible
+        public string repoName
         {
 
-            get { return this.tags[0].FriendlyName; }
+            get { return repositoriInfo.depot; }
 
             set
             {
-               
+                if (repositoriInfo.depot != value)
+                {
+                    repositoriInfo.depot = value;
+                }
             }
+        }
+        public string repoOwner
+        {
 
+            get { return repositoriInfo.owner; }
+
+            set
+            {
+                if (repositoriInfo.owner != value)
+                {
+                    repositoriInfo.owner = value;
+                }
+            }
         }
 
-
-
-        
-
-        public void updateBranchToTag(Tag t)
+        public bool IsInstalled()
         {
-            this.mc.updateBranchToTag(t);
+            return Directory.Exists(path);
+        }
+        public Mod(string civModFolder, string url, Repo repositoriInfo)
+        {
+
+            this.repositoriInfo = repositoriInfo;
+            repoName = repositoriInfo.depot;
+            path = civModFolder + "\\" + repositoriInfo.depot;
+            apiUrl = url + "/" + repositoriInfo.owner + "/" + repositoriInfo.depot;
         }
 
 

@@ -1,4 +1,5 @@
 ﻿using CivLaucherDotNetCore.Controleur;
+using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -31,6 +32,8 @@ namespace CivLaucherDotNetCore.Vue
             this.bmc = bmc;
             InitializeComponent();
             //bJouer.Style = BoutonJouer;
+
+
             webview.Content = new WebView();    
         }
         private void button_Click(object sender, RoutedEventArgs e)

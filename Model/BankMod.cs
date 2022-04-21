@@ -1,12 +1,10 @@
-﻿
-using CivLaucherDotNetCore;
-using CivLaucherDotNetCore.Controleur;
+﻿using CivLaucherDotNetCore.Controleur;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 
-namespace CivLauncher
+namespace CivLaucherDotNetCore.Model
 {
     public class BankMod
     {
@@ -25,8 +23,8 @@ namespace CivLauncher
                 repositoriesInfo = bindConfig.listeMod;
                 civModFolder = bindConfig.civModFolder;
                 FullcivModFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + civModFolder;
-                mods= new List<Mod>();
-            
+                mods = new List<Mod>();
+
 
             }
             catch (ConfigurationErrorsException)
@@ -34,21 +32,21 @@ namespace CivLauncher
                 Console.WriteLine("Error reading app settings");
             }
         }
-      /*  public List<Mod> Mods
-        {
+        /*  public List<Mod> Mods
+          {
 
-            get { return this.modsValue; }
+              get { return this.modsValue; }
 
-            set
-            {
-                if (this.modsValue != value)
-                {
-                    this.modsValue = value;
-                    //NotifyPropertyChanged();
-                }
-            }
+              set
+              {
+                  if (this.modsValue != value)
+                  {
+                      this.modsValue = value;
+                      //NotifyPropertyChanged();
+                  }
+              }
 
-        }*/
+          }*/
 
     }
 }

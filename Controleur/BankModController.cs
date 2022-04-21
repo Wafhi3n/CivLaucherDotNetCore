@@ -1,4 +1,4 @@
-﻿using CivLauncher;
+﻿using CivLaucherDotNetCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +30,7 @@ namespace CivLaucherDotNetCore.Controleur
                 m.repoUrl = bm.config.repoUrl;
                 bm.mods.Add(m);
                 ModController mc = new ModController(m);
-                m.mc = mc;
+                m.mController = mc;
                 modsController.Add(mc);
             }
         }

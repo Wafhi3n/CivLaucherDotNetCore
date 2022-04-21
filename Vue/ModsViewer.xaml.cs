@@ -1,8 +1,10 @@
 ﻿using CivLaucherDotNetCore.Controleur;
-using CivLauncher;
+using CivLaucherDotNetCore.Model;
+using CivLaucherDotNetCore.Vue.Model;
 using LibGit2Sharp;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,51 +28,27 @@ namespace CivLaucherDotNetCore.Vue
         BankModController bmc;
         MainFrame mainFrame;
         ContentControl mainContentControl;
+        private ObservableCollection<ModView> OMod;
         //ComboBox Tagscb;
         public ModsViewer(Controleur.BankModController bmc, MainFrame mainFrame, ContentControl mainContentControl)
         {
             InitializeComponent();
+            OMod = new ObservableCollection<ModView>();
+
+            foreach( Mod m in bmc.bm.mods)
+            {
+                OMod.Add(new ModView(m));
+            }
             this.bmc=bmc;
             this.mainFrame=mainFrame;
-            //ListMod.ItemsSource= bmc.bm.mods;
-            //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListMod.ItemsSource);
             this.mainContentControl=mainContentControl;
-            bmc.UpdateAllModLastAviableRelease();
-            //this.Tagscb = tagsCB;
-            //mainContentControl.ta
-            /*List<ModView> listModsView = new List<ModView>();
-            foreach(ModController m in bmc.modsController)
-            {
-                listModsView.Add(new ModView(m));
 
-            }*/
-
-            
-            DataGridMod.ItemsSource = bmc.bm.mods;
-            Console.WriteLine(bmc);
-
-
+            DataGridMod.ItemsSource = OMod;
         }
         private void update_Click(object sender, RoutedEventArgs e)
         {
-
             var button = sender as Button;
-
-            ((Mod)(button.DataContext)).mc.updateBranchToTagClick();
-
-            
-            //tagsCB.
-
-                 //((Mod)((Button)sender).Tag).mc.updateBranchToTag(tagsCB);
-
-
-                /*.updateBranchToTag()*/;
-
-            //sender.Tag.
-
-            // sender.
-            //modController.updateOrInstallToLastTag((Object)Tags.SelectedItem);
-
+            ((ModView)(button.DataContext)).updateBranchToTagClick();
         }
         private void RetourMainFrame(object sender, RoutedEventArgs e)
         {
@@ -83,7 +61,7 @@ namespace CivLaucherDotNetCore.Vue
 
         private void ComboBox_SelectionChanged(object sender, EventArgs e)
         {
-            ((Mod)(((ComboBox)sender).DataContext)).mc.tagSelect = (Tag)(((ComboBox)sender).SelectedItem);
+            ((ModView)(((ComboBox)sender).DataContext)).tagSelect = (Tag)(((ComboBox)sender).SelectedItem);
             // Do actions
         }
     }

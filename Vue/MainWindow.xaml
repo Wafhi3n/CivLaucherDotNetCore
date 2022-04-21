@@ -11,14 +11,11 @@
 
     <Grid>
         <Grid.Background>
-            <ImageBrush x:Name="backgroud" ImageSource="/ressources/Images/background.png"/>
+            <ImageBrush x:Name="backgroud"   ImageSource="/ModLoader;component/Ressources/Images/background.png"/>
             
-        </Grid.Background>
-        <ContentControl x:Name="contentControl"/>
+            </Grid.Background>
+            <ContentControl x:Name="contentControl"/>  
     </Grid>
-    <Window.Resources>
-        
-    </Window.Resources>
 </Window>
 
     

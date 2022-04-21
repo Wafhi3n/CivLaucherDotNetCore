@@ -13,9 +13,6 @@
                         <Border Background="{TemplateBinding Background}"  CornerRadius="15"  Height="75" Width="175">
                             <TextBlock   FontFamily="OPTIColumna" FontSize="37" FontWeight="Normal" Text="JOUER" VerticalAlignment="Center" TextAlignment="Center">
                             </TextBlock>
-                            <!--5<Border.Background>
-                                <SolidColorBrush Color="{TemplateBinding Background}"></SolidColorBrush>
-                            </Border.Background>-->
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
@@ -30,11 +27,12 @@
 
         <Style x:Key="BoutonMaj" TargetType="Button" >
             <Setter Property="Background" Value="#294a6c"/>
+            <Setter Property="TextBlock.Text" Value="{Binding buttonViewMod}"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <Border Background="{TemplateBinding Background}"  Margin="2px" CornerRadius="15" >
-                            <TextBlock   FontFamily="OPTIColumna" FontSize="16" FontWeight="Normal" Text="Mise à jour" VerticalAlignment="Center" TextAlignment="Center">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="15" >
+                            <TextBlock  Text="{TemplateBinding TextBlock.Text}" FontFamily="OPTIColumna" FontSize="16" FontWeight="Normal" VerticalAlignment="Center" TextAlignment="Center">
                             </TextBlock>
                             <!--5<Border.Background>
                                 <SolidColorBrush Color="{TemplateBinding Background}"></SolidColorBrush>
@@ -47,8 +45,13 @@
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#FF035604"/>
                 </Trigger>
-            </Style.Triggers>
+               
+              </Style.Triggers>
         </Style>
+
+
+
+
     </Application.Resources>
 </Application>
     
