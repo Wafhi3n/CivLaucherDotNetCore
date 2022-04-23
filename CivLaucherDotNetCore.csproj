@@ -8,28 +8,40 @@
     <UseWindowsForms>true</UseWindowsForms>
     <AssemblyName>ModLoader</AssemblyName>
     <RootNamespace>ModLoader</RootNamespace>
-    <StartupObject>CivLaucherDotNetCore.App</StartupObject>
-    <DebugType>none</DebugType>
+    <StartupObject></StartupObject>
+    <DebugType>full</DebugType>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <SignAssembly>False</SignAssembly>
     <PlatformTarget>x86</PlatformTarget>
+    <ApplicationIcon>bbg.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>False</Optimize>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Ressources\html\bbgPathNote.html" />
+    <None Remove="Ressources\Images\back.png" />
     <None Remove="Ressources\Images\background.png" />
     <None Remove="Ressources\Images\builder.png" />
     <None Remove="Ressources\Images\builderSwap.png" />
+    <None Remove="Ressources\Images\discord.png" />
+    <None Remove="Ressources\Images\discordb.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="bbg.ico" />
     <Content Include="Ressources\html\bbgPathNote.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Ressources\Images\back.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Ressources\Images\background.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -37,6 +49,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Ressources\Images\builderSwap.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Images\discord.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Images\discordb.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
@@ -57,6 +75,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Update="Vue\MainWindow.xaml.cs">
       <SubType>Code</SubType>
@@ -79,6 +102,10 @@
     </None>
     <None Update="OPTIColumna-Solid.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
 

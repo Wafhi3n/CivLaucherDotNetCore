@@ -26,8 +26,10 @@ namespace CivLaucherDotNetCore.Vue
         ModsViewer modViewers=null;
         BankModController bmc;
         ContentControl mainContentControl;
-        public MainFrame(BankModController bmc, ContentControl contentControl)
+        TextBlock contentControlLabelInfo;
+        public MainFrame(BankModController bmc, ContentControl contentControl, TextBlock contentControlLabelInfo)
         {
+            this.contentControlLabelInfo = contentControlLabelInfo;
             this.mainContentControl = contentControl;
             this.bmc = bmc;
             InitializeComponent();
@@ -52,7 +54,7 @@ namespace CivLaucherDotNetCore.Vue
             }
             else
             {
-                this.mainContentControl.Content = new ModsViewer(bmc, this, mainContentControl);
+                this.mainContentControl.Content = new ModsViewer(bmc, this, mainContentControl, contentControlLabelInfo);
             }
         }
     }

@@ -20,7 +20,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Vue\Dictionary\button.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Vue\Dictionary\color.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Vue\Dictionary\modsViewerStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Vue\MainFrame.xaml">

@@ -20,30 +20,27 @@ namespace CivLauncher
     /// </summary>
     public partial class MainWindow : Window
     {
+        //TextBlock contentControlLabelInfo;
+
         public MainWindow()
         {
 
         InitializeComponent();
-
-
-
-
-
-
-
-
+            //contentControlLabelInfo = labelInfo;
+            //contentControlLabelInfo.Text = "Bon jeu";
             var configurationBuilder = new ConfigurationBuilder();
             configurationBuilder.AddJsonFile(AppDomain.CurrentDomain.BaseDirectory+"\\appsettings.json");
             var configuration = configurationBuilder.Build();
             var bindConfig = new Config();
             configuration.Bind(bindConfig);
-
             BankMod bm = new BankMod(bindConfig);
             BankModController bmc = new BankModController(bm);
             bmc.GetAllModsFromConfig();
             bmc.InitialiseAllModRepoFromPath();
 
-            this.contentControl.Content = new MainFrame(bmc,this.contentControl);
+            
+
+            this.contentControl.Content = new MainFrame(bmc,this.contentControl, labelInfo);
 
         }
 
@@ -58,6 +55,8 @@ namespace CivLauncher
             await CoreWebView2Environment.CreateAsync("", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoder/Webview2",
                                         new CoreWebView2EnvironmentOptions(null, "FR", null));
         }
+
+
 
     }
 

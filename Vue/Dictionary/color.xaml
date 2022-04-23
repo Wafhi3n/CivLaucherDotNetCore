@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Bleu-->
+    <Color x:Key="bleuFonce">#071E33</Color>
+    <Color x:Key="bleuClaire1">#5598D4</Color>
+    <Color x:Key="bleuClaire2">#3B6D9A</Color>
+    
+    <SolidColorBrush x:Key="bleuFonceB" Color="{DynamicResource ResourceKey=bleuFonce}"></SolidColorBrush>
+    <SolidColorBrush x:Key="bleuClaire1B" Color="{DynamicResource ResourceKey=bleuClaire1}"></SolidColorBrush>
+    <SolidColorBrush x:Key="bleuClaire2B" Color="{DynamicResource ResourceKey=bleuClaire2}"></SolidColorBrush>
+    <!-- -->
+    <Color x:Key="blancCasse">#d0d4d9</Color>
+
+    <Color x:Key="emeraudeFonce">#044539</Color>
+    <Color x:Key="emeraudeClaire">#0da189</Color>
+
+    <SolidColorBrush x:Key="blancCasseB" Color="{DynamicResource ResourceKey=blancCasse}"></SolidColorBrush>
+    <SolidColorBrush x:Key="emeraudeFonceB" Color="{DynamicResource ResourceKey=emeraudeFonce}"></SolidColorBrush>
+    <SolidColorBrush x:Key="emeraudeClaireB" Color="{DynamicResource ResourceKey=emeraudeClaire}"></SolidColorBrush>
+
+
+</ResourceDictionary>

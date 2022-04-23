@@ -8,7 +8,9 @@
 
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1200">
-    <Grid Margin="50,50,0,0"  Background="White" Opacity="0.8" Width="750px" HorizontalAlignment="Left">
-        <wv2:WebView2  DefaultBackgroundColor="Transparent" Width="750px"  HorizontalAlignment="left" Name="webView"></wv2:WebView2>
+    <Grid>
+
+        <!--<wv2:WebView2  Width="450px" DefaultBackgroundColor="Transparent" HorizontalAlignment="left" Name="webView"></wv2:WebView2>-->
+
     </Grid>
 </UserControl>

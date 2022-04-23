@@ -19,6 +19,13 @@ namespace CivLaucherDotNetCore.Controleur
 
         internal ModView View { get; set; }
 
+
+        public string InstalledVersion()
+        {
+            if (repository != null) return repository.Head.Tip.Sha;
+            else return "";
+
+        }
         public string derniereVersionDisponible
         {
 

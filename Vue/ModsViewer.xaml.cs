@@ -28,17 +28,23 @@ namespace CivLaucherDotNetCore.Vue
         BankModController bmc;
         MainFrame mainFrame;
         ContentControl mainContentControl;
+        TextBlock contentControlLabelInfo;
+
+       
+
         private ObservableCollection<ModView> OMod;
         //ComboBox Tagscb;
-        public ModsViewer(Controleur.BankModController bmc, MainFrame mainFrame, ContentControl mainContentControl)
+        public ModsViewer(Controleur.BankModController bmc, MainFrame mainFrame, ContentControl mainContentControl, TextBlock contentControlLabelInfo)
         {
             InitializeComponent();
+            this.contentControlLabelInfo = contentControlLabelInfo;
             OMod = new ObservableCollection<ModView>();
 
             foreach( Mod m in bmc.bm.mods)
             {
-                OMod.Add(new ModView(m));
+                OMod.Add(new ModView(m, contentControlLabelInfo));
             }
+            
             this.bmc=bmc;
             this.mainFrame=mainFrame;
             this.mainContentControl=mainContentControl;
@@ -50,6 +56,8 @@ namespace CivLaucherDotNetCore.Vue
             var button = sender as Button;
             ((ModView)(button.DataContext)).updateBranchToTagClick();
         }
+
+
         private void RetourMainFrame(object sender, RoutedEventArgs e)
         {
             if (this.mainFrame != null)
@@ -61,7 +69,25 @@ namespace CivLaucherDotNetCore.Vue
 
         private void ComboBox_SelectionChanged(object sender, EventArgs e)
         {
-            ((ModView)(((ComboBox)sender).DataContext)).tagSelect = (Tag)(((ComboBox)sender).SelectedItem);
+            ModView mv = ((ModView)(((ComboBox)sender).DataContext));
+
+            Tag g = (Tag)(((ComboBox)sender).SelectedItem);
+
+            mv.tagSelect = g;
+
+
+            if (mv.tagCanChange(g))
+            {
+                mv.changeVisibilityButtonAndStatus(true);
+            }
+            else
+            {
+                mv.changeVisibilityButtonAndStatus(false);
+
+            }
+
+
+
             // Do actions
         }
     }

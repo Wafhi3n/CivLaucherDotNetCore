@@ -4,53 +4,13 @@
              xmlns:local="clr-namespace:CivLaucherDotNetCore"
              StartupUri="Vue/MainWindow.xaml">
     <Application.Resources>
-
-        <Style x:Key="BoutonJouer" TargetType="Button" >
-            <Setter Property="Background" Value="#f5bf42"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Border Background="{TemplateBinding Background}"  CornerRadius="15"  Height="75" Width="175">
-                            <TextBlock   FontFamily="OPTIColumna" FontSize="37" FontWeight="Normal" Text="JOUER" VerticalAlignment="Center" TextAlignment="Center">
-                            </TextBlock>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="DarkGoldenrod"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-
-        <Style x:Key="BoutonMaj" TargetType="Button" >
-            <Setter Property="Background" Value="#294a6c"/>
-            <Setter Property="TextBlock.Text" Value="{Binding buttonViewMod}"></Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Border Background="{TemplateBinding Background}" CornerRadius="15" >
-                            <TextBlock  Text="{TemplateBinding TextBlock.Text}" FontFamily="OPTIColumna" FontSize="16" FontWeight="Normal" VerticalAlignment="Center" TextAlignment="Center">
-                            </TextBlock>
-                            <!--5<Border.Background>
-                                <SolidColorBrush Color="{TemplateBinding Background}"></SolidColorBrush>
-                            </Border.Background>-->
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#FF035604"/>
-                </Trigger>
-               
-              </Style.Triggers>
-        </Style>
-
-
-
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Vue/Dictionary/color.xaml" />
+                <ResourceDictionary Source="Vue/Dictionary/button.xaml" />
+                <ResourceDictionary Source="Vue/Dictionary/modsViewerStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
 
     </Application.Resources>
 </Application>

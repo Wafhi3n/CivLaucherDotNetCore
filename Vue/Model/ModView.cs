@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace CivLaucherDotNetCore.Vue.Model
 {
@@ -19,15 +20,29 @@ namespace CivLaucherDotNetCore.Vue.Model
         rien    = 2    
     }
 
+    
 
     class ModView : INotifyPropertyChanged
     {
         private Mod modP;
-
         public event PropertyChangedEventHandler PropertyChanged;
-
+        System.Windows.Controls.TextBlock contentControlLabelInfo;
 
         private string buttonViewModVal;
+       
+        
+        System.Windows.Visibility visibility;
+
+        public System.Windows.Visibility buttonUpdateVisible { get
+            {
+                return visibility;
+
+            }
+            set { this.visibility = value;
+                NotifyPropertyChanged();
+            }
+        }
+            
         public string buttonViewMod
         {
             get
@@ -78,10 +93,52 @@ namespace CivLaucherDotNetCore.Vue.Model
                 }
             }
         }
-        public ModView(Mod mod)
+
+        public bool tagCanChange(Tag g)
+        {
+
+            string a = this.ModController.InstalledVersion();
+            string b = this.tagSelect.Target.Sha;
+            return /*(this.tagSelect != g && */ a != b;
+        }
+
+        internal void changeVisibilityButtonAndStatus(bool v)
+        {
+
+            if (v)
+            {
+                this.buttonUpdateVisible = System.Windows.Visibility.Visible;
+
+                if (!this.modP.mController.isInstalled())
+                {
+                    changeButtonMod(ButtonAction.install);
+                    // button to install
+                }
+                else
+                {
+                    changeButtonMod(ButtonAction.maj);
+                    //button to maj
+                }
+
+
+            }
+            else
+            {
+                this.buttonUpdateVisible = System.Windows.Visibility.Hidden;
+            }
+
+
+        }
+
+
+        public ModView(Mod mod, System.Windows.Controls.TextBlock contentControlLabelInfo)
         {
             this.modP = mod;
             this.ModController.View = this;
+            this.contentControlLabelInfo = contentControlLabelInfo;
+            //changeVisibilityButtonAndStatus(false);
+
+
             if (ModController.isInstalled())
             {
                 this.tagSelect = ModController.TagActuel();
@@ -184,7 +241,8 @@ namespace CivLaucherDotNetCore.Vue.Model
             if (tagSelect != null)
             {
                 ModController.updateBranchToTag(tagSelect);
-                this.labelInfo = this.Model.repoName + " Version :" + tagSelect.FriendlyName + "Installée";
+                InfoLabelModInstall(this.Model.repoName, tagSelect.FriendlyName);
+                changeVisibilityButtonAndStatus(false);
             }
             else
             {
@@ -194,13 +252,20 @@ namespace CivLaucherDotNetCore.Vue.Model
                     this.tagSelect = ModController.TagActuel();
                     Console.Write(this.tags);
                     this.derniereVersionDisponible = this.ModController.tags[0].FriendlyName;
-                    this.labelInfo = this.Model.repoName + " Version :" + tagSelect.FriendlyName + "Installée";
+                    InfoLabelModInstall(this.Model.repoName, tagSelect.FriendlyName);
+                    changeVisibilityButtonAndStatus(false);
                 }
 
 
             }
         }
-        
+
+        public void InfoLabelModInstall(string mod,string tag)
+        {
+            contentControlLabelInfo.Text = mod + " " + tag + " " + "Installé";
+        }
+
+
     }
 }
 

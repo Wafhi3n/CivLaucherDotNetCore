@@ -1,9 +1,9 @@
 {
   "profiles": {
-    "CivLaucherDotNetCore": {
-      "commandName": "Project",
-      "jsWebView2Debugging": false,
-      "nativeDebugging": false
+    "Profil 1": {
+      "commandName": "Executable",
+      "executablePath": "D:\\Users\\wafhi\\source\\repos\\CivLaucherDotNetCore\\bin\\Debug\\net6.0-windows\\ModLoader.exe",
+      "workingDirectory": "D:\\Users\\wafhi\\source\\repos\\CivLaucherDotNetCore\\bin\\Debug"
     }
   }
 }

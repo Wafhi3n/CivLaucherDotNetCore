@@ -6,44 +6,66 @@
              xmlns:local="clr-namespace:CivLaucherDotNetCore.Vue"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid VerticalAlignment="Top" >
+    <Grid VerticalAlignment="top">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80*" />
             <ColumnDefinition Width="20*" />
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="1" Grid.Row="0" Height="50" Width="50" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,50,50,0" Click="RetourMainFrame" Content="retour" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Button Grid.Column="1" Grid.Row="0"  Height="60" Width="60" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,30,30,0" Click="RetourMainFrame" Style="{DynamicResource ButtonBack}"  >
+        </Button>
 
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Margin="50,50,0,0">
+        <Grid HorizontalAlignment="center" VerticalAlignment="top" Grid.Row="1" >
 
 
+            <DataGrid Margin="20,30,20,20"  x:Name="DataGridMod" AutoGenerateColumns="False"  Grid.Row="1"   HeadersVisibility="Column" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{DynamicResource DatagridModStyle}"  >
+                <DataGrid.Columns  >
 
-
-            <DataGrid x:Name="DataGridMod" AutoGenerateColumns="False"  Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center" >
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Width="*">
-                        <DataGridTemplateColumn.Header>
-                            <TextBlock>Nom</TextBlock>
-                        </DataGridTemplateColumn.Header>
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Label x:Name="Nom" Content="{Binding repoName}" />
+                    <DataGridTemplateColumn  Width="150" CanUserResize="False" CanUserReorder="False" >
+                        
+                        
+                        
+                        <DataGridTemplateColumn.HeaderTemplate >
+                            <DataTemplate >
+                                <TextBlock>Nom</TextBlock>
                             </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        
+                        
+                        
+                        
+                        <DataGridTemplateColumn.CellTemplate >
+                            <DataTemplate >
+                                <Border BorderThickness="0">
+                                    <DataGridCell Style="{DynamicResource DatagridModStyleCell}">
+                                        <Label x:Name="Nom" Content="{Binding repoName}"  Style="{DynamicResource DatagridModStyleCellLabel}" />
+                                    </DataGridCell>
+                                </Border>
+
+
+
+
+
+                            </DataTemplate>
+                            
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn Width="*">
+                    <DataGridTemplateColumn Width="75">
                         <DataGridTemplateColumn.Header>
                             <TextBlock>Last Release</TextBlock>
                         </DataGridTemplateColumn.Header>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Label x:Name="versionDisponible" Content="{Binding derniereVersionDisponible}"/>
+                                <Label x:Name="versionDisponible" Content="{Binding derniereVersionDisponible}" Style="{DynamicResource DatagridModStyleCellLabel}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn Width="*">
+                    <DataGridTemplateColumn Width="100">
                         <DataGridTemplateColumn.Header>
                             <TextBlock>Version Installée</TextBlock>
                         </DataGridTemplateColumn.Header>
@@ -60,23 +82,23 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn Width="150">
+                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Tag="{Binding}" x:Name="updateBtutton" Style="{StaticResource BoutonMaj}" Click="update_Click" >
-                                </Button>
+                                <Button Tag="{Binding}" x:Name="updateBtutton" Style="{StaticResource BoutonMaj}" Click="update_Click" Margin="15,5,15,5" Visibility="{Binding buttonUpdateVisible}" />
+
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn Width="*">
+                   <!-- <DataGridTemplateColumn Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Label x:Name="version" Content="{Binding labelInfo}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-
+-->
                 </DataGrid.Columns>
             </DataGrid>
 
