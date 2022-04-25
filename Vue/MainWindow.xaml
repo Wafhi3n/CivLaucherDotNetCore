@@ -7,7 +7,7 @@
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
 
         mc:Ignorable="d"
-        Title="Mod Loader" Height="400" Width="700">
+        Title="Mod Loader" Height="700  " Width="1200">
 
     <Grid>
         
@@ -37,11 +37,20 @@
 
 
         </Grid>-->
-        <Border Grid.Row="1" Grid.Column="0" Margin="15,0,15,15"  Width="400" BorderBrush="#5497D4" BorderThickness="4px" Height="55px" Opacity="0.6"   CornerRadius="15" Background="#143F66" VerticalAlignment="Bottom" HorizontalAlignment="left" >
+        <Border Grid.Row="1" Grid.Column="0" Margin="15,0,15,15"  Width="800" BorderBrush="#5497D4" BorderThickness="4px" Height="80px"   CornerRadius="15" Background="#143F66" VerticalAlignment="Bottom" HorizontalAlignment="left" >
+            <Canvas  Height="35px" Width="790px" HorizontalAlignment="Left" VerticalAlignment="center">
+                <Canvas  Canvas.Left="0" Canvas.Top="0" Margin="0" ClipToBounds="True" Name="_canMain"    Height="35px" Width="790px"   >
+                    <TextBlock x:Uid="TextBlockLabelInfo" x:Name="labelInfo" FontSize="24" Text="{Binding labelInfo}" Foreground="#d0d4d9">
+                    </TextBlock>
+                </Canvas>
+            </Canvas>
         </Border>
 
-        <TextBlock Grid.Row="1" Grid.Column="0"  Margin="15,0,15,15"  Padding="15,0,0,15"   x:Name="labelInfo" FontSize="20" Text="{Binding labelInfo}" Foreground="#d0d4d9"  VerticalAlignment="Bottom" HorizontalAlignment="left"   >
-        </TextBlock>
+
+
+        <Button Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnUp_Click"/>
+
+
 
     </Grid>
 

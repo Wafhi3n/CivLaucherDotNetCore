@@ -9,20 +9,23 @@
     <AssemblyName>ModLoader</AssemblyName>
     <RootNamespace>ModLoader</RootNamespace>
     <StartupObject></StartupObject>
-    <DebugType>full</DebugType>
+    <DebugType>embedded</DebugType>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <SignAssembly>False</SignAssembly>
     <PlatformTarget>x86</PlatformTarget>
-    <ApplicationIcon>bbg.ico</ApplicationIcon>
+    <ApplicationIcon>Ressources\Images\bbg.ico</ApplicationIcon>
+    <NeutralLanguage>fr</NeutralLanguage>
+    <UICulture>fr-FR</UICulture>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>False</Optimize>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>False</Optimize>
   </PropertyGroup>
+
 
   <ItemGroup>
     <None Remove="Ressources\html\bbgPathNote.html" />
@@ -34,11 +37,16 @@
     <None Remove="Ressources\Images\discordb.png" />
   </ItemGroup>
 
+
   <ItemGroup>
-    <Content Include="bbg.ico" />
-    <Content Include="Ressources\html\bbgPathNote.html">
+    <Content Include="Ressources\Images\bbg.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Ressources\Images\bbg.ico" />
+    <Resource Include="Ressources\html\bbgPathNote.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Resource>
     <Resource Include="Ressources\Images\back.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -94,7 +102,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="appsettings.json">
+    <None Update="Defaultappsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="MainWindow.xaml">
@@ -114,5 +122,4 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-
 </Project>

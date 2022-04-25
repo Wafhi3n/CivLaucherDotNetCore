@@ -1,5 +1,6 @@
 ﻿using CivLaucherDotNetCore.Controleur;
 using CivLaucherDotNetCore.Model;
+using CivLauncher;
 using LibGit2Sharp;
 using System;
 using System.Collections.Generic;
@@ -17,16 +18,13 @@ namespace CivLaucherDotNetCore.Vue.Model
     {
         install = 0 ,
         maj     = 1 ,
-        rien    = 2    
+        rien    = 2           
     }
-
-    
-
     class ModView : INotifyPropertyChanged
     {
         private Mod modP;
         public event PropertyChangedEventHandler PropertyChanged;
-        System.Windows.Controls.TextBlock contentControlLabelInfo;
+        ScrollText contentControlLabelInfo;
 
         private string buttonViewModVal;
        
@@ -99,7 +97,7 @@ namespace CivLaucherDotNetCore.Vue.Model
 
             string a = this.ModController.InstalledVersion();
             string b = this.tagSelect.Target.Sha;
-            return /*(this.tagSelect != g && */ a != b;
+            return  a != b;
         }
 
         internal void changeVisibilityButtonAndStatus(bool v)
@@ -131,7 +129,7 @@ namespace CivLaucherDotNetCore.Vue.Model
         }
 
 
-        public ModView(Mod mod, System.Windows.Controls.TextBlock contentControlLabelInfo)
+        public ModView(Mod mod, ScrollText contentControlLabelInfo)
         {
             this.modP = mod;
             this.ModController.View = this;
@@ -162,7 +160,23 @@ namespace CivLaucherDotNetCore.Vue.Model
         }
         public void changeButtonMod(ButtonAction a)
         {
-            this.buttonViewMod = a.ToString();
+
+            //localiser
+            switch (a)
+            {
+                case ButtonAction.install:
+                    this.buttonViewMod = "Installer le mod";
+                    break;
+                case ButtonAction.rien:
+                    this.buttonViewMod = "";
+                    break;
+                case ButtonAction.maj:
+                    this.buttonViewMod = "Changer de version";
+                    break;
+            }        
+            
+            
+            
         }
         public ModController ModController { get { return modP.mController; } }
 
@@ -236,22 +250,21 @@ namespace CivLaucherDotNetCore.Vue.Model
                 NotifyPropertyChanged();
             }
         }
-        public void updateBranchToTagClick()
+        public async Task updateBranchToTagClickAsync()
         {
             if (tagSelect != null)
             {
-                ModController.updateBranchToTag(tagSelect);
+                await ModController.updateBranchToTagAsync(tagSelect);
                 InfoLabelModInstall(this.Model.repoName, tagSelect.FriendlyName);
                 changeVisibilityButtonAndStatus(false);
             }
             else
             {
-                if (this.buttonViewMod == ButtonAction.install.ToString())
+                if (!this.ModController.isInstalled())
                 {
-                    ModController.cloneMod();
+                    await ModController.cloneMod();
                     this.tagSelect = ModController.TagActuel();
-                    Console.Write(this.tags);
-                    this.derniereVersionDisponible = this.ModController.tags[0].FriendlyName;
+                    this.derniereVersionDisponible = this.ModController.LastTag.FriendlyName;
                     InfoLabelModInstall(this.Model.repoName, tagSelect.FriendlyName);
                     changeVisibilityButtonAndStatus(false);
                 }
@@ -262,7 +275,7 @@ namespace CivLaucherDotNetCore.Vue.Model
 
         public void InfoLabelModInstall(string mod,string tag)
         {
-            contentControlLabelInfo.Text = mod + " " + tag + " " + "Installé";
+            contentControlLabelInfo.labelInfoV = mod + " " + tag + " " + "Installé";
         }
 
 

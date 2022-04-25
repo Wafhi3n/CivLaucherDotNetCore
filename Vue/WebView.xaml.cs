@@ -28,26 +28,26 @@ namespace CivLaucherDotNetCore.Vue
         public WebView()
         {
             InitializeComponent();
-            //this.webViewV = webView;
-            //iniWebView();
-            //webView.Source = new Uri("https://cpl.gg/");
+            this.webViewV = webView;
+            iniWebView();
+            webView.Source = new Uri("https://cpl.gg/");
         }
-
-
         public async void iniWebView()
         {
-            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoder/Webview2"))
+            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoader/Webview2"))
             {
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoder/Webview2/");
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoader/Webview2/");
             }
 
 
-            CoreWebView2Environment tweb = await CoreWebView2Environment.CreateAsync("", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoder/Webview2",
+            CoreWebView2Environment tweb = await CoreWebView2Environment.CreateAsync("", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoader/Webview2",
                                         new CoreWebView2EnvironmentOptions(null, "FR", null));
 
-            //await webView.EnsureCoreWebView2Async(tweb);
+            await webView.EnsureCoreWebView2Async(tweb);
+
         }
 
 
     }
+
 }

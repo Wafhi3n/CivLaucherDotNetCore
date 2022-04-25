@@ -1,60 +1,93 @@
-﻿
-using CivLaucherDotNetCore;
-using CivLaucherDotNetCore.Controleur;
+﻿using CivLaucherDotNetCore.Controleur;
 using CivLaucherDotNetCore.Model;
 using CivLaucherDotNetCore.Vue;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Web.WebView2.Core;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
+using System.Windows.Media.Animation;
 
 namespace CivLauncher
 {
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    /// 
+    public class ScrollText
     {
-        //TextBlock contentControlLabelInfo;
+        TextBlock textBlock;
 
-        public MainWindow()
+        Canvas canMain;
+        public ScrollText(Canvas _canMain, TextBlock textBlock)
+        {
+            this.canMain = _canMain;
+            this.textBlock = textBlock;
+        }
+
+        public string labelInfoV
+        {
+            get
+            { return textBlock.Text; }
+
+
+            set
+            {
+                if (textBlock.Text != value)
+                {
+                    textBlock.Text = value;
+                    ScrollLabelInfo();
+                }
+            }
+        }
+
+        public void ScrollLabelInfo()
         {
 
-        InitializeComponent();
-            //contentControlLabelInfo = labelInfo;
-            //contentControlLabelInfo.Text = "Bon jeu";
+
+
+            DoubleAnimation doubleAnimation = new DoubleAnimation();
+            doubleAnimation.From = -textBlock.ActualWidth;
+            doubleAnimation.To = canMain.ActualWidth;
+            doubleAnimation.RepeatBehavior = RepeatBehavior.Forever;
+            doubleAnimation.Duration = new Duration(TimeSpan.Parse("0:0:30"));
+            textBlock.BeginAnimation(Canvas.LeftProperty, doubleAnimation);
+        }
+
+    }
+    public partial class MainWindow : Window
+    {
+
+        ScrollText st;
+        public MainWindow()
+        {
+            InitializeComponent();
+            this.st = new ScrollText(_canMain, labelInfo);
+            st.labelInfoV = "Bon jeu";
             var configurationBuilder = new ConfigurationBuilder();
-            configurationBuilder.AddJsonFile(AppDomain.CurrentDomain.BaseDirectory+"\\appsettings.json");
-            var configuration = configurationBuilder.Build();
             var bindConfig = new Config();
+            bindConfig.checkAndCPConfig();
+            configurationBuilder.AddJsonFile(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoader/appsettings.json");
+            var configuration = configurationBuilder.Build();
             configuration.Bind(bindConfig);
+            //bindConfig.SaveSettings();
             BankMod bm = new BankMod(bindConfig);
             BankModController bmc = new BankModController(bm);
             bmc.GetAllModsFromConfig();
             bmc.InitialiseAllModRepoFromPath();
+            this.contentControl.Content = new MainFrame(bmc, this.contentControl, st);
 
-            
-
-            this.contentControl.Content = new MainFrame(bmc,this.contentControl, labelInfo);
+            //
 
         }
-
-        public async void iniWebView()
+        private void btnUp_Click(object sender, RoutedEventArgs e)
         {
-            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoder/Webview2"))
-            {
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoder/Webview2/");
-            }
-
-
-            await CoreWebView2Environment.CreateAsync("", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ModLoder/Webview2",
-                                        new CoreWebView2EnvironmentOptions(null, "FR", null));
+            this.st.ScrollLabelInfo();
         }
+
+
+
+
+
 
 
 

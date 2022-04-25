@@ -18,17 +18,28 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Border CornerRadius="15"  Height="75" Width="175" BorderBrush="#795F13" BorderThickness="1px">
+                    <Border CornerRadius="3"  Height="80" Width="250"  BorderThickness="6px">
+                        <Border.BorderBrush>
+                            <RadialGradientBrush RadiusX="5" RadiusY="0.5" Center="0.5,0.5">
+                                <GradientStop Color="#a67c00" Offset="0.0"/>
+                                <GradientStop Color="#ffdc73" Offset="0.5"/>
+                                <GradientStop Color="#a67c00" Offset="1"/>
+                            </RadialGradientBrush>
+                        </Border.BorderBrush>
                         <Border.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#D6A825" Offset="0"/>
-                                <GradientStop Color="#FFDD7C" Offset="0.3"/>
-                                <GradientStop Color="#D6A825" Offset="0.7"/>
-                                <GradientStop Color="#795F13" Offset="1"/>
+                            <LinearGradientBrush EndPoint="0.3,0" StartPoint="0.5,0.5">
+                                <GradientStop Color="{DynamicResource vertBBGFonce}" Offset="0"/>
+                                <GradientStop Color="{DynamicResource vertBBG}" Offset="0.9"/>
+                                <GradientStop Color="{DynamicResource vertBBGFonce}" Offset="1"/>
                             </LinearGradientBrush>
                         </Border.Background>
-                        <TextBlock   FontFamily="OPTIColumna" FontSize="37" FontWeight="Normal" Text="JOUER" VerticalAlignment="Center" TextAlignment="Center" >
-
+                        <TextBlock x:Uid="TextBlockBtJouer"  FontFamily="OPTIColumna" FontSize="26" FontWeight="Normal" Text="JOUER" VerticalAlignment="Center" TextAlignment="Center" >
+                            <TextBlock.Foreground>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1"  >
+                                    <GradientStop Color="#a67c00" Offset="0.0"/>
+                                    <GradientStop Color="#ffbf00" Offset="1"/>
+                                </LinearGradientBrush>
+                            </TextBlock.Foreground>
                         </TextBlock>
                     </Border>
                 </ControlTemplate>
@@ -39,16 +50,28 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate>
-                            <Border CornerRadius="15"  Height="75" Width="175" BorderBrush="#795F13" BorderThickness="1px">
+                            <Border CornerRadius="3"  Height="80" Width="250"  BorderThickness="6px">
+                                <Border.BorderBrush>
+                                    <RadialGradientBrush RadiusX="4" RadiusY="0.5" Center="0.5,0.5">
+                                        <GradientStop Color="#a67c00" Offset="0.3"/>
+                                        <GradientStop Color="#ffdc73" Offset="0.5"/>
+                                        <GradientStop Color="#a67c00" Offset="1"/>
+                                    </RadialGradientBrush>
+                                </Border.BorderBrush>
                                 <Border.Background>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="#795F13" Offset="0"/>   
-                                        <GradientStop Color="#D6A825" Offset="0.3"/> 
-                                        <GradientStop Color="#FFDD7C" Offset="0.7"/> 
-                                        <GradientStop Color="#D6A825" Offset="1"/>   
+                                    <LinearGradientBrush EndPoint="0.5,0.5" StartPoint="0.3,0">
+                                        <GradientStop Color="{DynamicResource vertBBGFonce}" Offset="0"/>
+                                        <GradientStop Color="{DynamicResource vertBBG}" Offset="0.9"/>
+                                        <GradientStop Color="{DynamicResource vertBBGFonce}" Offset="1"/>
                                     </LinearGradientBrush>
                                 </Border.Background>
-                                <TextBlock   FontFamily="OPTIColumna" FontSize="36" FontWeight="Normal" Text="JOUER" VerticalAlignment="Center" TextAlignment="Center" Foreground="Black" >
+                                <TextBlock   FontFamily="OPTIColumna" FontSize="26" FontWeight="Normal" Text="JOUER" VerticalAlignment="Center" TextAlignment="Center" >
+                                    <TextBlock.Foreground>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1"  >
+                                            <GradientStop Color="#a67c00" Offset="0.5"/>
+                                            <GradientStop Color="#ffbf00" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </TextBlock.Foreground>
                                 </TextBlock>
                             </Border>
                         </ControlTemplate>
@@ -67,12 +90,29 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Border Background="{TemplateBinding Background}" CornerRadius="15" >
-                        <TextBlock Foreground="{TemplateBinding TextBlock.Foreground}" Text="{TemplateBinding TextBlock.Text}" FontFamily="OPTIColumna" FontSize="16" FontWeight="Normal" VerticalAlignment="Center" TextAlignment="Center">
+                    <Border CornerRadius="25"  Height="55" Width="250"  BorderThickness="3px">
+                        <Border.BorderBrush>
+                            <RadialGradientBrush RadiusX="5" RadiusY="0.5" Center="0.5,0.5">
+                                <GradientStop Color="#a67c00" Offset="0.0"/>
+                                <GradientStop Color="#ffdc73" Offset="0.5"/>
+                                <GradientStop Color="#a67c00" Offset="1"/>
+                            </RadialGradientBrush>
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.3,0" StartPoint="0.5,0.5">
+                                <GradientStop Color="{DynamicResource vertBBGFonce}" Offset="0"/>
+                                <GradientStop Color="{DynamicResource vertBBG}" Offset="0.9"/>
+                                <GradientStop Color="{DynamicResource vertBBGFonce}" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <TextBlock   FontFamily="OPTIColumna" FontSize="16" FontWeight="Normal" VerticalAlignment="Center" TextAlignment="Center" Text="{TemplateBinding TextBlock.Text}" >
+                            <TextBlock.Foreground>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1"  >
+                                    <GradientStop Color="{DynamicResource blancCasse}" Offset="0.0"/>
+                                    <GradientStop Color="White" Offset="1"/>
+                                </LinearGradientBrush>
+                            </TextBlock.Foreground>
                         </TextBlock>
-                        <!--5<Border.Background>
-                                <SolidColorBrush Color="{TemplateBinding Background}"></SolidColorBrush>
-                            </Border.Background>-->
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

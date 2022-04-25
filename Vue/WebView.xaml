@@ -9,8 +9,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1200">
     <Grid>
-
-        <!--<wv2:WebView2  Width="450px" DefaultBackgroundColor="Transparent" HorizontalAlignment="left" Name="webView"></wv2:WebView2>-->
-
+        <wv2:WebView2  Width="900" Height="450" HorizontalAlignment="left" Name="webView"></wv2:WebView2>
     </Grid>
 </UserControl>

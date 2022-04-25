@@ -1,6 +1,7 @@
 ﻿using CivLaucherDotNetCore.Controleur;
 using CivLaucherDotNetCore.Model;
 using CivLaucherDotNetCore.Vue.Model;
+using CivLauncher;
 using LibGit2Sharp;
 using System;
 using System.Collections.Generic;
@@ -28,13 +29,13 @@ namespace CivLaucherDotNetCore.Vue
         BankModController bmc;
         MainFrame mainFrame;
         ContentControl mainContentControl;
-        TextBlock contentControlLabelInfo;
+        ScrollText contentControlLabelInfo;
 
        
 
         private ObservableCollection<ModView> OMod;
         //ComboBox Tagscb;
-        public ModsViewer(Controleur.BankModController bmc, MainFrame mainFrame, ContentControl mainContentControl, TextBlock contentControlLabelInfo)
+        public ModsViewer(Controleur.BankModController bmc, MainFrame mainFrame, ContentControl mainContentControl, ScrollText contentControlLabelInfo)
         {
             InitializeComponent();
             this.contentControlLabelInfo = contentControlLabelInfo;
@@ -54,7 +55,7 @@ namespace CivLaucherDotNetCore.Vue
         private void update_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            ((ModView)(button.DataContext)).updateBranchToTagClick();
+            ((ModView)(button.DataContext)).updateBranchToTagClickAsync();
         }
 
 

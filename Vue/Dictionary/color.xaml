@@ -15,6 +15,14 @@
     <Color x:Key="emeraudeFonce">#044539</Color>
     <Color x:Key="emeraudeClaire">#0da189</Color>
 
+    <Color x:Key="vertBBGClaire">#88E4E4</Color>
+
+    <Color x:Key="vertBBG">#3D8F8F</Color>
+    <Color x:Key="vertBBGFonce">#184747</Color>
+
+
+    
+
     <SolidColorBrush x:Key="blancCasseB" Color="{DynamicResource ResourceKey=blancCasse}"></SolidColorBrush>
     <SolidColorBrush x:Key="emeraudeFonceB" Color="{DynamicResource ResourceKey=emeraudeFonce}"></SolidColorBrush>
     <SolidColorBrush x:Key="emeraudeClaireB" Color="{DynamicResource ResourceKey=emeraudeClaire}"></SolidColorBrush>

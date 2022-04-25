@@ -16,12 +16,15 @@
     </Style>
 
     <Style x:Key="DatagridModStyleCell" TargetType="DataGridCell">
-        <Setter Property="Background" Value="White"></Setter>
         <Setter Property="BorderThickness" Value="0"></Setter>
         <Setter Property="BorderBrush" Value="{DynamicResource bleuFonceB}"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
     </Style >
     <Style x:Key="DatagridModStyleCellLabel" TargetType="Label">
         <Setter Property="Foreground" Value="Black"></Setter>
+        <Setter Property="FontSize" Value="22"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+
     </Style>
     <Style x:Key="DatagridModStyleHC" TargetType="DataGridColumnHeader">
         <Setter Property="Background" Value="{DynamicResource bleuFonceB}"></Setter>

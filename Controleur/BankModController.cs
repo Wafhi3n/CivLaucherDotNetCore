@@ -14,14 +14,11 @@ namespace CivLaucherDotNetCore.Controleur
         static readonly HttpClient client = new HttpClient();
         public BankMod bm { get; set; }
         public List<ModController> modsController { get; set; }
-
         public BankModController(BankMod bm)
         {
             this.bm = bm;
             modsController = new List<ModController>();
         }
-
-
         internal void GetAllModsFromConfig()
         {
             foreach (Repo mod in bm.repositoriesInfo)
@@ -34,22 +31,13 @@ namespace CivLaucherDotNetCore.Controleur
                 modsController.Add(mc);
             }
         }
-
         public void UpdateAllModLastAviableRelease()
         {
-
-
             foreach (ModController mod in modsController)
             {
                mod.getLastTagNameReleaseFromRepo();
-            }
-
-            
-
+            }        
         }
-
-
-
         public void InitialiseAllModRepoFromPath()
         {
             foreach (ModController mod in modsController)

@@ -17,16 +17,11 @@ namespace CivLaucherDotNetCore.Model
     public class Mod
     {
         public ModController mController { get; set; }
-
-
         internal string repoUrl { get; set; }
-
         public string path { get; set; }
-
         public string apiUrl { get; set; }
         public string status { get; set; }
         private Repo repositoriInfo { get; set; }
-
         public string repoName
         {
 
@@ -42,9 +37,7 @@ namespace CivLaucherDotNetCore.Model
         }
         public string repoOwner
         {
-
             get { return repositoriInfo.owner; }
-
             set
             {
                 if (repositoriInfo.owner != value)

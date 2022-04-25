@@ -12,12 +12,17 @@
     <Compile Update="Vue\MainFrame.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Vue\ModsViewer.xaml.cs">
+    <Compile Update="Vue\ModsViewers\ModsViewer.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Vue\WebView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Vue\Dictionary\button.xaml">
@@ -38,7 +43,7 @@
     <Page Update="Vue\MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Vue\ModsViewer.xaml">
+    <Page Update="Vue\ModsViewers\ModsViewer.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Vue\WebView.xaml">

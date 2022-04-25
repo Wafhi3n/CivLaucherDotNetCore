@@ -1,4 +1,5 @@
 ﻿using CivLaucherDotNetCore.Controleur;
+using CivLauncher;
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
@@ -26,8 +27,8 @@ namespace CivLaucherDotNetCore.Vue
         ModsViewer modViewers=null;
         BankModController bmc;
         ContentControl mainContentControl;
-        TextBlock contentControlLabelInfo;
-        public MainFrame(BankModController bmc, ContentControl contentControl, TextBlock contentControlLabelInfo)
+        ScrollText contentControlLabelInfo;
+        public MainFrame(BankModController bmc, ContentControl contentControl, ScrollText  contentControlLabelInfo)
         {
             this.contentControlLabelInfo = contentControlLabelInfo;
             this.mainContentControl = contentControl;

@@ -10,14 +10,14 @@
             <RowDefinition Height="60*"/>
             <RowDefinition Height="40*"/>
         </Grid.RowDefinitions>
-        <Grid>
+        <Grid Margin="40">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <ContentControl x:Name="webview" Grid.Column="0" Margin="0"/>
-            <Button ToolTip="Configurer les mods"  Grid.Column="1" Grid.Row="0"  VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,30,30,0" Click="GoToModFrame">
-                <Image Height="60">
+            <Button ToolTip="Configurer les mods"  Grid.Column="1" Grid.Row="0"  VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,0,0" Click="GoToModFrame">
+                <Image Height="70">
                     <Image.Style>
                         <Style TargetType="{x:Type Image}">
                             <Setter Property="Source" Value="/ressources/Images/builder.png"/>
@@ -32,7 +32,7 @@
             </Button>
         </Grid>
         <Grid Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
-            <Button x:Name="bJouer"  Click="button_Click"  Style="{StaticResource BoutonJouer}" Margin="15,15,15,15"/>
+            <Button x:Name="bJouer"  Click="button_Click"  Style="{StaticResource BoutonJouer}" Margin="0,0,20,20"/>
         </Grid>
     </Grid>
 </UserControl>
