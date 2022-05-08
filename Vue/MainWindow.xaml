@@ -40,7 +40,7 @@
         <Border Grid.Row="1" Grid.Column="0" Margin="15,0,15,15"  Width="800" BorderBrush="#5497D4" BorderThickness="4px" Height="80px"   CornerRadius="15" Background="#143F66" VerticalAlignment="Bottom" HorizontalAlignment="left" >
             <Canvas  Height="35px" Width="790px" HorizontalAlignment="Left" VerticalAlignment="center">
                 <Canvas  Canvas.Left="0" Canvas.Top="0" Margin="0" ClipToBounds="True" Name="_canMain"    Height="35px" Width="790px"   >
-                    <TextBlock x:Uid="TextBlockLabelInfo" x:Name="labelInfo" FontSize="24" Foreground="#d0d4d9">
+                    <TextBlock x:Uid="TextBlockLabelInfo" x:Name="labelInfo" Text="{Binding labelInfo}" FontSize="24" Foreground="#d0d4d9">
                     </TextBlock>
                 </Canvas>
             </Canvas>

@@ -98,8 +98,8 @@
 
 
 
-        <ContentControl  Height="50" Width="50" x:Name="selectlanguages" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-
+        <!--<ContentControl  Height="50" Width="50" x:Name="selectlanguages" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+-->
 
     </Grid>
 

@@ -37,10 +37,10 @@ namespace CivLaucherDotNetCore.Vue
 
         private ObservableCollection<ModView> OMod;
         //ComboBox Tagscb;
-        public ModsViewer(Controleur.BankModController bmc, MainFrame mainFrame, ContentControl mainContentControl, ScrollText contentControlLabelInfo, MainWindowViewModel view)
+        public ModsViewer(Controleur.BankModController bmc, MainFrame mainFrame, ContentControl mainContentControl, ScrollText contentControlLabelInfo/*MainWindowViewModel view*/)
         {
             InitializeComponent();
-            mainView = view;
+            //mainView = view;
             this.contentControlLabelInfo = contentControlLabelInfo;
             OMod = new ObservableCollection<ModView>();
 
@@ -52,7 +52,7 @@ namespace CivLaucherDotNetCore.Vue
             this.bmc=bmc;
             this.mainFrame=mainFrame;
             this.mainContentControl=mainContentControl;
-            selectlanguages.Content = new SelectLanguages(view);
+            //selectlanguages.Content = new SelectLanguages(view);
             DataGridMod.ItemsSource = OMod;
         }
         private void update_Click(object sender, RoutedEventArgs e)

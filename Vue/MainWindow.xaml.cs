@@ -19,16 +19,16 @@ namespace CivLauncher
 
 
 
-    public partial class MainWindow : Window
+       public partial class MainWindow : Window
     {
 
         ScrollText st;
-        MainWindowViewModel mainView;
+        //MainWindowViewModel mainView;
         public MainWindow()
         {
             InitializeComponent();
-            mainView = new MainWindowViewModel();
-            DataContext = mainView;
+            //mainView = new MainWindowViewModel();
+            //DataContext = mainView;
             this.st = new ScrollText(_canMain, labelInfo);
             var configurationBuilder = new ConfigurationBuilder();
             var bindConfig = new Config();
@@ -41,7 +41,7 @@ namespace CivLauncher
             BankModController bmc = new BankModController(bm);
             bmc.GetAllModsFromConfig();
             bmc.InitialiseAllModRepoFromPath();
-            this.contentControl.Content = new MainFrame(bmc, this.contentControl, st, mainView);
+            this.contentControl.Content = new MainFrame(bmc, this.contentControl, st);
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -99,3 +99,4 @@ namespace CivLauncher
         }
     }
 }
+

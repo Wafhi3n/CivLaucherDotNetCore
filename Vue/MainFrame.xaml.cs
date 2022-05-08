@@ -30,9 +30,9 @@ namespace CivLaucherDotNetCore.Vue
         ContentControl mainContentControl;
         ScrollText st;
         MainWindowViewModel mainView;
-        public MainFrame(BankModController bmc, ContentControl contentControl, ScrollText  st, MainWindowViewModel view)
+        public MainFrame(BankModController bmc, ContentControl contentControl, ScrollText  st)
         {
-            mainView = view;
+            //mainView = view;
             this.st = st;
             this.mainContentControl = contentControl;
             this.bmc = bmc;
@@ -40,7 +40,7 @@ namespace CivLaucherDotNetCore.Vue
             //bJouer.Style = BoutonJouer;
             //this.st.labelInfoV = "Bon jeu";
             st.ScrollLabelInfo();
-            this.modViewers = new ModsViewer(bmc, this, mainContentControl, st,view);
+            this.modViewers = new ModsViewer(bmc, this, mainContentControl, st);
             webview.Content = new WebView();    
         }
         private void button_Click(object sender, RoutedEventArgs e)
