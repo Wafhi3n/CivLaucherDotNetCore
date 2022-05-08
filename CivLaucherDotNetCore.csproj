@@ -14,8 +14,7 @@
     <SignAssembly>False</SignAssembly>
     <PlatformTarget>x86</PlatformTarget>
     <ApplicationIcon>Ressources\Images\bbg.ico</ApplicationIcon>
-    <NeutralLanguage>fr</NeutralLanguage>
-    <UICulture>fr-FR</UICulture>
+
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -25,7 +24,7 @@
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>False</Optimize>
   </PropertyGroup>
-
+	
 
   <ItemGroup>
     <None Remove="Ressources\html\bbgPathNote.html" />

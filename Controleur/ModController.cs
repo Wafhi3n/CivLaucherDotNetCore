@@ -45,6 +45,19 @@ namespace CivLaucherDotNetCore.Controleur
             }
 
         }
+
+        public Boolean IsUpdateAviable()
+        {
+            //Console.write(this.LastTag);
+            if (isInstalled() && this.LastTag != null && this.LastTag.Reference.TargetIdentifier != this.repository.Head.Tip.Sha)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public Tag TagActuel()
         {
             foreach (Tag tag in repository.Tags)

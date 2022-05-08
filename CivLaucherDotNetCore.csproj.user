@@ -9,6 +9,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Translation\SelectLanguages.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Vue\MainFrame.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -25,6 +28,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Translation\SelectLanguages.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Vue\Dictionary\button.xaml">
       <SubType>Designer</SubType>
     </Page>

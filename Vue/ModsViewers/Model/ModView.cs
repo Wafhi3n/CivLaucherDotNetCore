@@ -24,7 +24,7 @@ namespace CivLaucherDotNetCore.Vue.Model
     {
         private Mod modP;
         public event PropertyChangedEventHandler PropertyChanged;
-        ScrollText contentControlLabelInfo;
+        ScrollText st;
 
         private string buttonViewModVal;
        
@@ -129,27 +129,33 @@ namespace CivLaucherDotNetCore.Vue.Model
         }
 
 
-        public ModView(Mod mod, ScrollText contentControlLabelInfo)
+        public ModView(Mod mod, ScrollText st)
         {
             this.modP = mod;
             this.ModController.View = this;
-            this.contentControlLabelInfo = contentControlLabelInfo;
+            this.st = st;
             //changeVisibilityButtonAndStatus(false);
-
 
             if (ModController.isInstalled())
             {
                 this.tagSelect = ModController.TagActuel();
-                this.derniereVersionDisponible = ModController.tags[0].FriendlyName;
-                if(this.tagSelect != this.ModController.tags.First())
+                if (ModController.tags.Count > 0)
                 {
-                    changeButtonMod(ButtonAction.maj);
+                    this.derniereVersionDisponible = ModController.tags[0].FriendlyName;
+                    if (this.tagSelect != this.ModController.tags.First())
+                    {
+                        changeButtonMod(ButtonAction.maj);
 
+                    }
+                    else
+                    {
+                        changeButtonMod(ButtonAction.rien);
+
+                    }
                 }
-                else
+                if (this.ModController.IsUpdateAviable())
                 {
-                    changeButtonMod(ButtonAction.rien);
-
+                    st.setTextUpdateAviable(InfoLabelModCanUpdate());
                 }
             }
             else
@@ -255,7 +261,9 @@ namespace CivLaucherDotNetCore.Vue.Model
             if (tagSelect != null)
             {
                 await ModController.updateBranchToTagAsync(tagSelect);
-                InfoLabelModInstall(this.Model.repoName, tagSelect.FriendlyName);
+                st.labelInfoV = "";
+                st.setTextUpdateAviable(InfoLabelModInstall());
+                st.ScrollLabelInfo();
                 changeVisibilityButtonAndStatus(false);
             }
             else
@@ -265,7 +273,9 @@ namespace CivLaucherDotNetCore.Vue.Model
                     await ModController.cloneMod();
                     this.tagSelect = ModController.TagActuel();
                     this.derniereVersionDisponible = this.ModController.LastTag.FriendlyName;
-                    InfoLabelModInstall(this.Model.repoName, tagSelect.FriendlyName);
+                    st.labelInfoV = "";
+                    st.setTextUpdateAviable(InfoLabelModInstall());
+                    st.ScrollLabelInfo();
                     changeVisibilityButtonAndStatus(false);
                 }
 
@@ -273,11 +283,19 @@ namespace CivLaucherDotNetCore.Vue.Model
             }
         }
 
-        public void InfoLabelModInstall(string mod,string tag)
+        public string InfoLabelModInstall()
         {
-            contentControlLabelInfo.labelInfoV = mod + " " + tag + " " + "Installé";
+           return this.repoName + " " + this.ModController.TagActuel().FriendlyName + " " + "Installé";
+
+           
+
         }
 
+        public string  InfoLabelModCanUpdate()
+        {
+            string a = "...Mise à jour de " + this.repoName +" "+ this.ModController.TagActuel().FriendlyName + " vers " + this.tags.First().FriendlyName + " disponible...";
+            return a;    
+        }
 
     }
 }

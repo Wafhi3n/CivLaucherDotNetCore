@@ -31,6 +31,17 @@ namespace CivLaucherDotNetCore.Controleur
                 modsController.Add(mc);
             }
         }
+
+        public void DisplayisUpdateAviable()
+        {
+            foreach (ModController mc in modsController)
+            {
+                if (mc.IsUpdateAviable())
+                {
+                    mc.View.InfoLabelModCanUpdate();
+                }
+            }
+        }
         public void UpdateAllModLastAviableRelease()
         {
             foreach (ModController mod in modsController)

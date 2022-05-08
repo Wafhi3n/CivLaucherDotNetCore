@@ -1,6 +1,7 @@
 ﻿using CivLaucherDotNetCore.Controleur;
 using CivLauncher;
 using Microsoft.Web.WebView2.Core;
+using ModLoader.Vue;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,19 +25,22 @@ namespace CivLaucherDotNetCore.Vue
     /// </summary>
     public partial class MainFrame : UserControl
     {
-        ModsViewer modViewers=null;
+        ModsViewer modViewers;
         BankModController bmc;
         ContentControl mainContentControl;
-        ScrollText contentControlLabelInfo;
-        public MainFrame(BankModController bmc, ContentControl contentControl, ScrollText  contentControlLabelInfo)
+        ScrollText st;
+        MainWindowViewModel mainView;
+        public MainFrame(BankModController bmc, ContentControl contentControl, ScrollText  st, MainWindowViewModel view)
         {
-            this.contentControlLabelInfo = contentControlLabelInfo;
+            mainView = view;
+            this.st = st;
             this.mainContentControl = contentControl;
             this.bmc = bmc;
             InitializeComponent();
             //bJouer.Style = BoutonJouer;
-
-
+            //this.st.labelInfoV = "Bon jeu";
+            st.ScrollLabelInfo();
+            this.modViewers = new ModsViewer(bmc, this, mainContentControl, st,view);
             webview.Content = new WebView();    
         }
         private void button_Click(object sender, RoutedEventArgs e)
@@ -55,7 +59,7 @@ namespace CivLaucherDotNetCore.Vue
             }
             else
             {
-                this.mainContentControl.Content = new ModsViewer(bmc, this, mainContentControl, contentControlLabelInfo);
+                this.mainContentControl.Content = modViewers;
             }
         }
     }
